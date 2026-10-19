@@ -48,6 +48,12 @@ These changes are done in order to improve the overall usability, and as workaro
 11. Fill the response descriptions and make the operation summaries distinct
 - **Reason**: Every response was described only as `200`, and only 80 of the 152 operation summaries were distinct. A response description was written for each of the 152 operations, and 103 summaries were rewritten so each operation has its own. This change is made in the original spec `docs/spec/openapi.json` using `tooling/apply_descriptions.py` with `docs/spec/description-decisions.json`.
 
+12. Give `getMovieRecommendations` a typed response
+- **Reason**: The 200 response schema of `/movie/{movie_id}/recommendations` was an empty object, so the client returned `record {}`. It now declares `page`, `results`, `total_pages` and `total_results`, with `results` items referencing the new `MovieListItem` schema, so the method returns `GetMovieRecommendationsResponse`. This change is made in the original spec `docs/spec/openapi.json`.
+
+13. Change five path parameters from `string` to `integer`
+- **Reason**: `movie_id` (`/movie/{movie_id}/keywords`), `person_id` (`/person/{person_id}/combined_credits`), `series_id` (`/tv/{series_id}/similar`), `keyword_id` (`/keyword/{keyword_id}/movies`) and `episode_number` (`/tv/{series_id}/season/{season_number}/episode/{episode_number}/external_ids`) are integer identifiers everywhere else in the API. This is an intentional usability change made in the original spec `docs/spec/openapi.json`. The string identifiers `credit_id`, `review_id`, `tv_episode_group_id`, `guest_session_id` and `external_id` are unchanged.
+
 ## OpenAPI cli command
 
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.

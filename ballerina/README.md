@@ -14,7 +14,7 @@ The connector supports version 3 of the TMDB API and exposes its full operation 
 
 ## Setup guide
 
-To use the connector you need a TMDB API read access token.
+To use the connector you need a TMDB API read access token. The token is enough for general use. Managing favorites, watchlists, ratings and lists also needs a user-authorised `session_id`, which you obtain by creating a request token, having the user approve it, and then calling `createSession`.
 
 1. Create a free account at [The Movie Database](https://www.themoviedb.org/signup) and sign in.
 

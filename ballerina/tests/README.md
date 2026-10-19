@@ -9,7 +9,9 @@ To run the tests against the live TMDB API instead, set the following environmen
 | Variable | Description |
 |---|---|
 | `IS_LIVE_SERVER` | Set to `true` to call `https://api.themoviedb.org/3` instead of the mock server. |
-| `TMDB_API_TOKEN` | TMDB API read access token. |
+| `TMDB_API_TOKEN` | TMDB API read access token. Required when `IS_LIVE_SERVER` is `true`. |
+
+The mock server listens on port `9090` by default. Set the `mockPort` configurable to use another port.
 
 Operations that create, change or delete account data (favorites, sessions, lists, ratings) run against the mock server only.
 

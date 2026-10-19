@@ -11,6 +11,26 @@
     ],
     "components": {
         "schemas": {
+            "MovieListItem": {
+                "type": "object",
+                "description": "A movie as listed in a paged result.",
+                "properties": {
+                    "adult": {"type": "boolean", "description": "Whether the movie is for adults."},
+                    "backdrop_path": {"type": "string", "description": "Path of the backdrop image."},
+                    "genre_ids": {"type": "array", "description": "IDs of the genres of the movie.", "items": {"type": "integer"}},
+                    "id": {"type": "integer", "description": "TMDB ID of the movie."},
+                    "original_language": {"type": "string", "description": "Original language of the movie."},
+                    "original_title": {"type": "string", "description": "Original title of the movie."},
+                    "overview": {"type": "string", "description": "Plot summary of the movie."},
+                    "popularity": {"type": "number", "description": "Popularity score of the movie."},
+                    "poster_path": {"type": "string", "description": "Path of the poster image."},
+                    "release_date": {"type": "string", "description": "Release date of the movie."},
+                    "title": {"type": "string", "description": "Title of the movie."},
+                    "video": {"type": "boolean", "description": "Whether the entry is a video."},
+                    "vote_average": {"type": "number", "description": "Average user rating."},
+                    "vote_count": {"type": "integer", "description": "Number of user votes."}
+                }
+            },
             "Certification": {
                 "type": "object",
                 "description": "A content certification (age rating) used in a country.",
@@ -5175,7 +5195,7 @@
                         "name": "keyword_id",
                         "in": "path",
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         },
                         "required": true
                     },
@@ -7460,7 +7480,7 @@
                         "name": "movie_id",
                         "in": "path",
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         },
                         "required": true
                     }
@@ -7797,7 +7817,7 @@
                                 },
                                 "schema": {
                                     "type": "object",
-                                    "properties": {}
+                                    "properties": {"page": {"type": "integer", "description": "Page number of the result set."}, "results": {"type": "array", "description": "Recommended movies on this page.", "items": {"$ref": "#/components/schemas/MovieListItem"}}, "total_pages": {"type": "integer", "description": "Total number of pages."}, "total_results": {"type": "integer", "description": "Total number of recommended movies."}}
                                 }
                             }
                         }
@@ -9157,7 +9177,7 @@
                         "name": "person_id",
                         "in": "path",
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         },
                         "required": true
                     },
@@ -15253,7 +15273,7 @@
                         "name": "series_id",
                         "in": "path",
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         },
                         "required": true
                     },
@@ -17758,7 +17778,7 @@
                         "name": "episode_number",
                         "in": "path",
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         },
                         "required": true
                     }

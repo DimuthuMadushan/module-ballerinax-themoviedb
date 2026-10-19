@@ -20,8 +20,19 @@ import ballerina/os;
 import ballerina/test;
 
 final boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
-final string serviceUrl = isLiveServer ? "https://api.themoviedb.org/3" : "http://localhost:9090";
-final string token = isLiveServer ? os:getEnv("TMDB_API_TOKEN") : "test_token";
+final string serviceUrl = isLiveServer ? "https://api.themoviedb.org/3" : string `http://localhost:${mockPort}`;
+function getToken() returns string|error {
+    if !isLiveServer {
+        return "test_token";
+    }
+    string value = os:getEnv("TMDB_API_TOKEN");
+    if value == "" {
+        return error("TMDB_API_TOKEN must be set when IS_LIVE_SERVER=true");
+    }
+    return value;
+}
+
+final string token = check getToken();
 
 final Client tmdb = check new ({auth: {token}, httpVersion: http:HTTP_1_1}, serviceUrl);
 
@@ -102,7 +113,7 @@ function testCreateList() returns error? {
     test:assertTrue(response.listId > 0);
 }
 
-@test:Config {groups: ["live_tests", "mock_tests"]}
+@test:Config {groups: ["mock_tests"]}
 function testGetListDetails() returns error? {
     GetListDetailsResponse response = check tmdb->getListDetails(8228);
     test:assertTrue(response.name is string);
@@ -177,8 +188,13 @@ function testGetPersonDetails() returns error? {
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 function testSearchMovies() returns error? {
-    SearchMoviesResponse response = check tmdb->searchMovies(query = "fight club");
-    test:assertTrue((response.results ?: []).length() > 0);
+    string query = "fight club";
+    SearchMoviesResponse response = check tmdb->searchMovies(query = query);
+    SearchMoviesResults[] results = response.results ?: [];
+    test:assertTrue(results.length() > 0);
+    if !isLiveServer {
+        test:assertEquals(results[0].title, query);
+    }
 }
 
 @test:Config {groups: ["live_tests", "mock_tests"]}

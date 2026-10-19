@@ -16,6 +16,8 @@
 
 import ballerina/http;
 
+configurable int mockPort = 9090;
+
 listener http:Listener ep0 = new (9090);
 
 @http:ServiceConfig {treatNilableAsOptional: true}
@@ -154,7 +156,7 @@ service / on ep0 {
     # + return - Successful response
     resource function get search/movie(string query, @http:Query {name: "primary_release_year"} string? primaryReleaseYear, string? region, string? year, @http:Query {name: "include_adult"} boolean includeAdult = false, string language = "en-US", int page = 1) returns SearchMoviesResponse {
         return {page: 1, totalPages: 1, totalResults: 1, results: [
-            {id: 155, title: "The Dark Knight", originalTitle: "The Dark Knight", originalLanguage: "en", overview: "Batman raises the stakes in his war on crime with the help of Lt. Jim Gordon and District Attorney Harvey Dent.", posterPath: "/qJ2tW6WMUDux911r6m7haRef0WH.jpg", backdropPath: "/nMKdUUepR0i5zn0y1T4CsSB5chy.jpg", releaseDate: "2008-07-16", genreIds: [18, 28, 80], popularity: 70.2, voteAverage: 8.5, voteCount: 32000, video: false, adult: false}
+            {id: 155, title: query, originalTitle: query, originalLanguage: "en", overview: "Batman raises the stakes in his war on crime with the help of Lt. Jim Gordon and District Attorney Harvey Dent.", posterPath: "/qJ2tW6WMUDux911r6m7haRef0WH.jpg", backdropPath: "/nMKdUUepR0i5zn0y1T4CsSB5chy.jpg", releaseDate: "2008-07-16", genreIds: [18, 28, 80], popularity: 70.2, voteAverage: 8.5, voteCount: 32000, video: false, adult: false}
         ]};
     }
 

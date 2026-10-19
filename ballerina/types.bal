@@ -1074,6 +1074,19 @@ public type GetNetworkAlternativeNamesResults record {
     string 'type?;
 };
 
+public type GetMovieRecommendationsResponse record {
+    # Page number of the result set
+    int page?;
+    # Total number of pages
+    @jsondata:Name {value: "total_pages"}
+    int totalPages?;
+    # Recommended movies on this page
+    MovieListItem[] results?;
+    # Total number of recommended movies
+    @jsondata:Name {value: "total_results"}
+    int totalResults?;
+};
+
 public type GetTvSeriesReviewsAuthorDetails record {
     @jsondata:Name {value: "avatar_path"}
     string avatarPath?;
@@ -2614,6 +2627,46 @@ public type GetTvEpisodeGroupDetailsNetwork record {
     int id = 0;
     @jsondata:Name {value: "origin_country"}
     string originCountry?;
+};
+
+# A movie as listed in a paged result
+public type MovieListItem record {
+    # Plot summary of the movie
+    string overview?;
+    # Original language of the movie
+    @jsondata:Name {value: "original_language"}
+    string originalLanguage?;
+    # Original title of the movie
+    @jsondata:Name {value: "original_title"}
+    string originalTitle?;
+    # Whether the entry is a video
+    boolean video?;
+    # Title of the movie
+    string title?;
+    # IDs of the genres of the movie
+    @jsondata:Name {value: "genre_ids"}
+    int[] genreIds?;
+    # Path of the poster image
+    @jsondata:Name {value: "poster_path"}
+    string posterPath?;
+    # Path of the backdrop image
+    @jsondata:Name {value: "backdrop_path"}
+    string backdropPath?;
+    # Release date of the movie
+    @jsondata:Name {value: "release_date"}
+    string releaseDate?;
+    # Popularity score of the movie
+    decimal popularity?;
+    # Average user rating
+    @jsondata:Name {value: "vote_average"}
+    decimal voteAverage?;
+    # TMDB ID of the movie
+    int id?;
+    # Whether the movie is for adults
+    boolean adult?;
+    # Number of user votes
+    @jsondata:Name {value: "vote_count"}
+    int voteCount?;
 };
 
 # Represents the Queries record for the operation: getSimilarMovies

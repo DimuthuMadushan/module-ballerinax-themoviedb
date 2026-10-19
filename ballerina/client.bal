@@ -518,7 +518,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - A page of the movies tagged with the keyword 
-    remote isolated function listKeywordMovies(string keywordId, map<string|string[]> headers = {}, *ListKeywordMoviesQueries queries) returns ListKeywordMoviesResponse|error {
+    remote isolated function listKeywordMovies(int keywordId, map<string|string[]> headers = {}, *ListKeywordMoviesQueries queries) returns ListKeywordMoviesResponse|error {
         string resourcePath = string `/keyword/${getEncodedUri(keywordId)}/movies`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -737,7 +737,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - The keywords associated with the movie 
-    remote isolated function getMovieKeywords(string movieId, map<string|string[]> headers = {}) returns GetMovieKeywordsResponse|error {
+    remote isolated function getMovieKeywords(int movieId, map<string|string[]> headers = {}) returns GetMovieKeywordsResponse|error {
         string resourcePath = string `/movie/${getEncodedUri(movieId)}/keywords`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -767,7 +767,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - A page of movies recommended based on the movie 
-    remote isolated function getMovieRecommendations(int movieId, map<string|string[]> headers = {}, *GetMovieRecommendationsQueries queries) returns record {}|error {
+    remote isolated function getMovieRecommendations(int movieId, map<string|string[]> headers = {}, *GetMovieRecommendationsQueries queries) returns GetMovieRecommendationsResponse|error {
         string resourcePath = string `/movie/${getEncodedUri(movieId)}/recommendations`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -926,7 +926,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - The movie and TV cast and crew credits of the person 
-    remote isolated function getPersonCombinedCredits(string personId, map<string|string[]> headers = {}, *GetPersonCombinedCreditsQueries queries) returns GetPersonCombinedCreditsResponse|error {
+    remote isolated function getPersonCombinedCredits(int personId, map<string|string[]> headers = {}, *GetPersonCombinedCreditsQueries queries) returns GetPersonCombinedCreditsResponse|error {
         string resourcePath = string `/person/${getEncodedUri(personId)}/combined_credits`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1342,7 +1342,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - A page of TV series similar to the TV series 
-    remote isolated function getSimilarTvSeries(string seriesId, map<string|string[]> headers = {}, *GetSimilarTvSeriesQueries queries) returns GetSimilarTvSeriesResponse|error {
+    remote isolated function getSimilarTvSeries(int seriesId, map<string|string[]> headers = {}, *GetSimilarTvSeriesQueries queries) returns GetSimilarTvSeriesResponse|error {
         string resourcePath = string `/tv/${getEncodedUri(seriesId)}/similar`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1557,7 +1557,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - The external IDs of the episode, such as IMDb and TVDB identifiers 
-    remote isolated function getTvEpisodeExternalIds(int seriesId, int seasonNumber, string episodeNumber, map<string|string[]> headers = {}) returns GetTvEpisodeExternalIdsResponse|error {
+    remote isolated function getTvEpisodeExternalIds(int seriesId, int seasonNumber, int episodeNumber, map<string|string[]> headers = {}) returns GetTvEpisodeExternalIdsResponse|error {
         string resourcePath = string `/tv/${getEncodedUri(seriesId)}/season/${getEncodedUri(seasonNumber)}/episode/${getEncodedUri(episodeNumber)}/external_ids`;
         return self.clientEp->get(resourcePath, headers);
     }
